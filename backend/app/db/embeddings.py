@@ -5,14 +5,21 @@ then cosine similarity to find the best matches.
 """
 
 import numpy as np
-from sentence_transformers import SentenceTransformer
 
-# lightweight model — fast, good enough for symptom/service matching
+try:
+    from sentence_transformers import SentenceTransformer
+    _EMBEDDINGS_AVAILABLE = True
+except ImportError:
+    _EMBEDDINGS_AVAILABLE = False
+    SentenceTransformer = None
+
 _MODEL_NAME = "all-MiniLM-L6-v2"
-_model: SentenceTransformer | None = None
+_model = None
 
 
-def _get_model() -> SentenceTransformer:
+def _get_model():
+    if not _EMBEDDINGS_AVAILABLE:
+        raise RuntimeError("sentence-transformers not installed")
     global _model
     if _model is None:
         _model = SentenceTransformer(_MODEL_NAME)

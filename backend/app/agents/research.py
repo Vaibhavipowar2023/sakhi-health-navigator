@@ -77,10 +77,12 @@ def query_local_db(
     if not candidates:
         return []
 
-    # semantic ranking when we have symptoms text
     if symptoms:
-        query_vec = embed_text(symptoms)
-        ranked = find_similar(query_vec, candidates, top_k=limit)
+        try:
+            query_vec = embed_text(symptoms)
+            ranked = find_similar(query_vec, candidates, top_k=limit)
+        except RuntimeError:
+            ranked = candidates[:limit]
     else:
         ranked = candidates[:limit]
 

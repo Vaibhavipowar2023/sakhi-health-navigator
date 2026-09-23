@@ -1,0 +1,13 @@
+fastapi
+pymongo
+pydantic
+pydantic-settings
+langgraph
+langchain-groq
+mcp
+structlog
+pyyaml
+httpx
+python-dotenv
+composio-client
+numpy
