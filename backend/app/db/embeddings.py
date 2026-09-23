@@ -4,14 +4,14 @@ Uses sentence-transformers to embed provider services and patient symptoms,
 then cosine similarity to find the best matches.
 """
 
-import numpy as np
-
 try:
+    import numpy as np
     from sentence_transformers import SentenceTransformer
     _EMBEDDINGS_AVAILABLE = True
 except ImportError:
-    _EMBEDDINGS_AVAILABLE = False
+    np = None
     SentenceTransformer = None
+    _EMBEDDINGS_AVAILABLE = False
 
 _MODEL_NAME = "all-MiniLM-L6-v2"
 _model = None
