@@ -17,12 +17,14 @@ dependencies = [
     "httpx",
     "python-dotenv",
     "composio-client",
-    "sentence-transformers",
 ]
 
 [dependency-groups]
 dev = [
     "pytest",
+]
+ml = [
+    "sentence-transformers",
 ]
 
 [tool.pytest.ini_options]

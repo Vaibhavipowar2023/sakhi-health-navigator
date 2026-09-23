@@ -2173,7 +2173,6 @@ dependencies = [
     { name = "pymongo" },
     { name = "python-dotenv" },
     { name = "pyyaml" },
-    { name = "sentence-transformers" },
     { name = "structlog" },
     { name = "uvicorn" },
 ]
@@ -2181,6 +2180,9 @@ dependencies = [
 [package.dev-dependencies]
 dev = [
     { name = "pytest" },
+]
+ml = [
+    { name = "sentence-transformers" },
 ]
 
 [package.metadata]
@@ -2196,13 +2198,13 @@ requires-dist = [
     { name = "pymongo" },
     { name = "python-dotenv" },
     { name = "pyyaml" },
-    { name = "sentence-transformers" },
     { name = "structlog" },
     { name = "uvicorn" },
 ]
 
 [package.metadata.requires-dev]
 dev = [{ name = "pytest" }]
+ml = [{ name = "sentence-transformers" }]
 
 [[package]]
 name = "scikit-learn"
