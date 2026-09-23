@@ -1,0 +1,9 @@
+# Ranking weights — must sum to 1.0 (validated at load time).
+# Changing a weight changes every ranking transparently; nothing is hidden
+# inside a prompt.
+weights:
+  specialty_match: 0.35
+  expertise_match: 0.25
+  insurance_match: 0.15
+  location: 0.15
+  availability: 0.10

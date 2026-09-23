@@ -1,0 +1,30 @@
+[project]
+name = "sakhi-navigator"
+version = "0.1.0"
+description = "Women's health specialist routing agent - healthcare navigation, never diagnosis"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "pymongo",
+    "pydantic",
+    "pydantic-settings",
+    "langgraph",
+    "langchain-groq",
+    "mcp",
+    "structlog",
+    "pyyaml",
+    "httpx",
+    "python-dotenv",
+    "composio-client",
+    "sentence-transformers",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

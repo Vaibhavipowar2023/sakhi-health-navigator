@@ -1,0 +1,102 @@
+# Deterministic red-flag rules. These run BEFORE any LLM sees the case, on
+# both the patient's raw text and the structured profile, so an LLM
+# extraction miss can never suppress an escalation.
+#
+# text_rules: pattern_groups is AND-of-ORs — the rule fires when EVERY group
+# has at least one case-insensitive regex match in the raw text.
+# profile_rules: fire on structured PatientProfile fields.
+#
+# level "emergency" -> advise immediate emergency care, stop the pipeline.
+# level "crisis"    -> mental-health crisis resources, stop the pipeline.
+# Over-triggering is acceptable; missing a real case is not.
+
+emergency_message: >
+  Based on what you've shared, this may need urgent medical attention.
+  Please contact emergency services (dial 112 in India) or go to the nearest
+  emergency department now. This tool cannot evaluate urgent conditions and
+  will not suggest specialists for this situation.
+
+crisis_message: >
+  What you're describing sounds serious, and you deserve immediate support.
+  Please reach out right now to a crisis helpline — in India, Tele-MANAS at
+  14416 (24x7, free) — or go to the nearest emergency department. You are not
+  alone, and help is available.
+
+text_rules:
+  - id: pregnancy_bleeding
+    level: emergency
+    description: Bleeding or spotting during known or suspected pregnancy.
+    pattern_groups:
+      - ["pregnan", "expecting a baby"]
+      - ["bleed", "spott"]
+
+  - id: ectopic_pattern
+    level: emergency
+    description: Missed period / positive test with severe one-sided pain.
+    pattern_groups:
+      - ["missed (my )?period", "late period", "positive pregnancy test", "period is late"]
+      - ["severe", "sharp", "one[- ]?side", "unbearable"]
+      - ["pain"]
+
+  - id: heavy_hemorrhage
+    level: emergency
+    description: Bleeding heavy enough to soak through protection rapidly.
+    pattern_groups:
+      - ["soak", "flood", "gush"]
+      - ["pad", "tampon", "cloth"]
+
+  - id: fainting_with_bleeding
+    level: emergency
+    description: Fainting, collapse or severe dizziness together with bleeding.
+    pattern_groups:
+      - ["faint", "passed out", "blacked? out", "collaps", "too dizzy to stand"]
+      - ["bleed", "blood", "period"]
+
+  - id: fever_pelvic_pain
+    level: emergency
+    description: Fever combined with pelvic or lower abdominal pain.
+    pattern_groups:
+      - ["fever", "high temperature"]
+      - ["pelvi", "lower abdom", "lower belly", "lower stomach"]
+      - ["pain", "ache", "hurt"]
+
+  - id: preeclampsia_pattern
+    level: emergency
+    description: Pregnancy with severe headache, vision changes or facial swelling.
+    pattern_groups:
+      - ["pregnan", "expecting a baby"]
+      - ["severe headache", "blurr", "vision", "seeing spots", "face is swollen", "swelling in my face"]
+
+  - id: breast_lump_skin_changes
+    level: emergency
+    description: Breast lump together with skin or nipple changes.
+    pattern_groups:
+      - ["breast"]
+      - ["lump", "mass", "hard swelling"]
+      - ["skin", "dimpl", "redness", "discharge", "inverted", "growing", "getting bigger"]
+
+  - id: self_harm
+    level: crisis
+    description: Any expression of self-harm or suicidal thoughts.
+    pattern_groups:
+      - ["suicid", "kill myself", "harm(ing)? myself", "hurt(ing)? myself", "end my life", "want to die", "not want to live", "no reason to live"]
+
+  - id: harm_to_baby
+    level: crisis
+    description: Thoughts of harming the baby (postpartum crisis pattern).
+    pattern_groups:
+      - ["thoughts? of harming", "thoughts? of hurting", "want to hurt", "afraid i (might|will) hurt", "scared i (might|will) hurt"]
+      - ["baby", "newborn", "child"]
+
+profile_rules:
+  - id: pregnant_severe_symptoms
+    level: emergency
+    description: Pregnant or possibly pregnant with extracted bleeding/severe-pain symptoms.
+    pregnancy_status: ["pregnant", "possibly"]
+    symptom_patterns: ["bleed", "spott", "severe pain", "sharp pain"]
+
+  - id: postpartum_mood_risk
+    level: crisis
+    description: Postpartum with extracted symptoms suggesting risk of self-harm.
+    pregnancy_status: ["postpartum"]
+    symptom_patterns: ["self[- ]?harm", "suicid", "want to die", "hopeless", "harm .*baby"]

@@ -1,0 +1,144 @@
+# Controlled taxonomy of care pathways for women's health navigation.
+# The Care Routing Agent may ONLY answer with an id from this list —
+# anything else is rejected in code. This file is data, not prompt text:
+# editing it needs no code changes and every entry is auditable.
+#
+# Includes women's health specialties AND general medical specialties
+# because women seek care for all kinds of health issues.
+pathways:
+
+  # ── Women's Health ──────────────────────────────────────────────
+
+  - id: general_gynecology
+    name: General Gynecology
+    description: Broad evaluation of gynecological symptoms without a clear subspecialty signal.
+    typical_signals: [irregular periods, unusual discharge, general pelvic discomfort, routine concerns]
+    escalation_note: Default pathway when symptoms are gynecological but non-specific.
+
+  - id: pelvic_pain_endometriosis
+    name: Pelvic Pain / Endometriosis-focused Gynecology
+    description: Chronic or cyclical pelvic pain, painful periods interfering with life, suspected endometriosis evaluation.
+    typical_signals: [chronic pelvic pain, pain worse during periods, painful intercourse, pain unresolved by primary care]
+    escalation_note: Sudden severe pelvic pain is a red-flag case, not this pathway.
+
+  - id: pcos_hormonal
+    name: PCOS & Hormonal Health
+    description: Symptoms suggesting hormonal imbalance appropriate for gynecological/endocrine evaluation.
+    typical_signals: [very irregular or missed periods, excess facial hair, acne with weight change, hair thinning]
+    escalation_note: None specific; routine specialist evaluation.
+
+  - id: fertility
+    name: Fertility / Reproductive Endocrinology
+    description: Difficulty conceiving or planning for fertility evaluation and treatment.
+    typical_signals: [trying to conceive without success, fertility testing request, recurrent pregnancy loss]
+    escalation_note: Recurrent loss may also need high-risk obstetric input.
+
+  - id: obstetrics
+    name: Obstetrics (Pregnancy Care)
+    description: Routine antenatal and pregnancy-related care.
+    typical_signals: [confirmed pregnancy needing checkups, antenatal care, pregnancy planning visits]
+    escalation_note: Bleeding, severe pain, severe headache or vision changes in pregnancy are red-flag cases.
+
+  - id: high_risk_obstetrics
+    name: High-Risk Obstetrics / Maternal-Fetal Medicine
+    description: Pregnancy with known complicating conditions needing specialist maternal-fetal care.
+    typical_signals: [pregnancy with diabetes or hypertension or thyroid disease, multiple pregnancy, prior complicated pregnancy]
+    escalation_note: Acute symptoms in these patients are red-flag cases.
+
+  - id: urogynecology
+    name: Urogynecology
+    description: Pelvic floor disorders including urinary leakage and prolapse.
+    typical_signals: [urine leakage on coughing or sneezing, frequent urgency, feeling of vaginal bulge or pressure]
+    escalation_note: Fever with urinary symptoms may need urgent care first.
+
+  - id: breast_health
+    name: Breast Health
+    description: Breast symptoms needing clinical evaluation or screening guidance.
+    typical_signals: [breast lump, breast pain, nipple discharge, family history needing screening advice]
+    escalation_note: Lump with skin changes or rapid change is a red-flag case for urgent evaluation.
+
+  - id: menopause
+    name: Menopause & Midlife Health
+    description: Perimenopausal and menopausal symptom management.
+    typical_signals: [hot flashes, night sweats, sleep disturbance in 40s-50s, cycle changes after 45, mood changes at midlife]
+    escalation_note: Post-menopausal bleeding needs prompt gynecological evaluation.
+
+  - id: perinatal_mental_health
+    name: Perinatal / Postpartum Mental Health
+    description: Mood and anxiety concerns during pregnancy or after childbirth.
+    typical_signals: [persistent sadness after delivery, anxiety about the baby, feeling unable to cope, loss of interest postpartum]
+    escalation_note: Thoughts of self-harm or harming the baby are crisis cases, handled by the safety layer.
+
+  - id: pelvic_floor_physio
+    name: Pelvic Floor Physiotherapy
+    description: Conservative rehabilitation for pelvic floor dysfunction.
+    typical_signals: [postpartum core or pelvic floor weakness, mild leakage after delivery, pain with tampon use, referred for pelvic physio]
+    escalation_note: New severe pain is not a physiotherapy case.
+
+  - id: adolescent_gynecology
+    name: Adolescent Gynecology
+    description: Gynecological concerns in teenage patients.
+    typical_signals: [teenager with period problems, severe period pain in teens, delayed first period]
+    escalation_note: Confidentiality and guardian involvement handled by the clinic, not this system.
+
+  # ── General Medical ─────────────────────────────────────────────
+
+  - id: orthopedic
+    name: Orthopedics / Bone & Joint Care
+    description: Bone, joint, muscle, and spine-related problems.
+    typical_signals: [knee pain, back pain, joint pain, fracture, arthritis, sports injury, spine problems, shoulder pain]
+    escalation_note: Sudden loss of limb function or severe trauma needs emergency care.
+
+  - id: dermatology
+    name: Dermatology / Skin Care
+    description: Skin, hair, and nail conditions.
+    typical_signals: [skin rash, acne, eczema, psoriasis, hair loss, pigmentation, fungal infection, skin allergy]
+    escalation_note: Rapidly spreading rash with fever may need urgent care.
+
+  - id: mental_health
+    name: Mental Health / Psychiatry & Psychology
+    description: Anxiety, depression, stress, and other mental health concerns not linked to pregnancy.
+    typical_signals: [anxiety, depression, panic attacks, insomnia, stress, loneliness, anger issues, mood swings unrelated to periods]
+    escalation_note: Suicidal thoughts or self-harm are crisis cases, handled by the safety layer.
+
+  - id: general_medicine
+    name: General Medicine / Internal Medicine
+    description: General health concerns that don't clearly fit a specialty.
+    typical_signals: [fever, fatigue, weakness, body pain, headache, cold, cough, general illness]
+    escalation_note: Default pathway when symptoms are non-specific and not gynecological.
+
+  - id: ent
+    name: ENT (Ear, Nose & Throat)
+    description: Ear, nose, throat, and related head/neck conditions.
+    typical_signals: [ear pain, sore throat, sinus problems, hearing loss, tonsils, nasal congestion, voice changes]
+    escalation_note: Sudden hearing loss or difficulty breathing needs emergency care.
+
+  - id: ophthalmology
+    name: Ophthalmology / Eye Care
+    description: Vision and eye-related conditions.
+    typical_signals: [blurry vision, eye pain, redness, itching, dry eyes, vision changes, eye infection]
+    escalation_note: Sudden vision loss is an emergency.
+
+  - id: dental
+    name: Dental Care
+    description: Teeth, gum, and oral health issues.
+    typical_signals: [toothache, gum bleeding, cavity, jaw pain, wisdom tooth, dental checkup]
+    escalation_note: Severe swelling with fever may need urgent care.
+
+  - id: gastroenterology
+    name: Gastroenterology / Digestive Health
+    description: Stomach, digestive, and liver-related issues.
+    typical_signals: [stomach pain, acidity, bloating, constipation, diarrhea, nausea, liver issues, IBS]
+    escalation_note: Vomiting blood or severe abdominal pain needs emergency care.
+
+  - id: endocrinology
+    name: Endocrinology / Hormonal & Thyroid
+    description: Thyroid, diabetes, and hormonal disorders not related to reproductive health.
+    typical_signals: [thyroid issues, diabetes, weight gain or loss, hormonal imbalance non-reproductive]
+    escalation_note: Diabetic emergencies need urgent care.
+
+  - id: cardiology
+    name: Cardiology / Heart Health
+    description: Heart and cardiovascular health concerns.
+    typical_signals: [chest pain, palpitations, breathlessness, high blood pressure, heart checkup]
+    escalation_note: Chest pain with sweating or arm pain is an emergency.
